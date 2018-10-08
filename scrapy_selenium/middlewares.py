@@ -40,7 +40,7 @@ class SeleniumMiddleware:
         driver_options_module = import_module(f'{webdriver_base_path}.options')
         driver_options_klass = getattr(driver_options_module, 'Options')
         
-        #基于前面的理念，环环相扣，消灭了多少ifelse~
+        #基于前面的理念，环环相扣，给selenium一致的命名规则点个赞！消灭了多少ifelse~
         driver_options = driver_options_klass()
         for argument in driver_arguments:
             driver_options.add_argument(argument)
