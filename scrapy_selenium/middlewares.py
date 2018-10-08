@@ -26,15 +26,21 @@ class SeleniumMiddleware:
             A list of arguments to initialize the driver
 
         """
-
+        #个人认为比较经典的一段代码
+        #根据selenium类的命名规则，通过不同的浏览器的名称导入对应的类
+        #selenium类路径命名类似于这样：
+        #chrome:selenium.webdriver.chrome.webdriver 
+        #firefox:selenium.webdriver.firefox.webdriver
         webdriver_base_path = f'selenium.webdriver.{driver_name}'
 
         driver_klass_module = import_module(f'{webdriver_base_path}.webdriver')
+        #具体实现类名为WebDriver
         driver_klass = getattr(driver_klass_module, 'WebDriver')
-
+        #导入选项的处理与前面类似
         driver_options_module = import_module(f'{webdriver_base_path}.options')
         driver_options_klass = getattr(driver_options_module, 'Options')
-
+        
+        #基于前面的理念，环环相扣，消灭了多少ifelse~
         driver_options = driver_options_klass()
         for argument in driver_arguments:
             driver_options.add_argument(argument)
@@ -43,7 +49,7 @@ class SeleniumMiddleware:
             'executable_path': driver_executable_path,
             f'{driver_name}_options': driver_options
         }
-
+        #**driver_kwargs python基础啊！！！
         self.driver = driver_klass(**driver_kwargs)
 
     @classmethod
